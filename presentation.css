@@ -1,0 +1,239 @@
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0f2242;
+  cursor: none;
+}
+.layer { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Media fills the frame's opening (fractions of the 1671x941 art); the frame SVG is drawn above it. */
+:root {
+  --cut-left: 2.9%;
+  --cut-top: 2.9%;
+  --cut-width: 94.2%;
+  --cut-height: 94.2%;
+}
+/* The stage is the frame's opening; the world inside it is panned/zoomed and carries the marks. */
+#stage {
+  position: absolute;
+  z-index: 1;
+  left: var(--cut-left);
+  top: var(--cut-top);
+  width: var(--cut-width);
+  height: var(--cut-height);
+  overflow: hidden;
+}
+#parchment { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .35s ease; }
+body.has-media #parchment { opacity: 1; }
+#world { position: absolute; inset: 0; transform-origin: 50% 50%; will-change: transform; }
+#media-img, #media-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+#marks { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+[hidden] { display: none !important; }
+
+#banner {
+  position: absolute;
+  z-index: 12;
+  left: var(--cut-left);
+  width: var(--cut-width);
+  bottom: 11%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+#banner-box {
+  max-width: 88%;
+  padding: 14px 48px;
+  text-align: center;
+  color: #f0d78c;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, .8);
+  background: linear-gradient(180deg, rgba(36, 54, 95, .95) 0%, rgba(19, 31, 59, .95) 100%);
+  border-top: 3px solid #c9a24a;
+  border-bottom: 3px solid #c9a24a;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .6);
+}
+#banner-title { font: 700 44px/1.2 Georgia, "Times New Roman", serif; letter-spacing: .04em; }
+#banner-text { font: 400 26px/1.35 Georgia, "Times New Roman", serif; color: #f4ecd4; margin-top: 6px; }
+#banner-text:empty { display: none; }
+
+#frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ---------- ornaments ---------- */
+.orn { position: absolute; z-index: 10; pointer-events: none; }
+:root {
+  --gold-tint: sepia(1) saturate(4) hue-rotate(-12deg) brightness(1.1);
+}
+
+/* Full-height column from tallcolumn.png (233x1073): the top 300px (capital) and bottom 253px (base)
+   are drawn once; the plain fluted shaft between them tiles from tallcolumn-shaft.png. */
+.column {
+  --w: 6vw;
+  --k: calc(var(--w) / 233);
+  top: 0;
+  bottom: 0;
+  width: var(--w);
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, .55));
+}
+.column .cap { flex: none; height: calc(var(--k) * 300); background: url(assets/tallcolumn.png) top left / 100% auto no-repeat; }
+.column .mid { flex: 1; margin: -1px 0; background: url(assets/tallcolumn-shaft.png) top left / 100% auto repeat-y; }
+.column .base { flex: none; height: calc(var(--k) * 253); background: url(assets/tallcolumn.png) bottom left / 100% auto no-repeat; }
+.column.left { left: 0; }
+.column.right { right: 0; }
+
+/* Soft shadow so media looks set into the frame (sits under the frame, over the media). */
+#vignette {
+  position: absolute;
+  z-index: 2;
+  left: var(--cut-left);
+  top: var(--cut-top);
+  width: var(--cut-width);
+  height: var(--cut-height);
+  box-shadow: inset 0 0 4vw 1vw rgba(0, 0, 0, .55);
+  pointer-events: none;
+}
+#backdrop { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+/* Round medallions */
+.medallion {
+  width: 6.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #1d3a6a 0%, #0f2242 75%);
+  border: 4px solid #c9a24a;
+  box-shadow: 0 0 0 3px #0f2242, 0 6px 16px rgba(0, 0, 0, .6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.medallion.eye { left: 50%; bottom: 0.4%; transform: translateX(-50%); z-index: 11; }
+.medallion.aegis { left: 7.4%; top: 1%; width: 5.4%; }
+.medallion.compass { right: 7.4%; top: 1%; width: 5.4%; }
+.medallion.ring { left: 50%; top: 0.6%; width: 7.2%; transform: translateX(-50%); }
+.medallion.tree { right: 8%; bottom: 1%; width: 6%; }
+
+/* Gold silhouette of an image, using its alpha channel as the mask. */
+.gold-art {
+  width: 66%;
+  height: 66%;
+  background: linear-gradient(180deg, #f3d987 0%, #b98a2c 100%);
+  -webkit-mask: var(--art) center / contain no-repeat;
+  mask: var(--art) center / contain no-repeat;
+}
+.gold-art.wide { width: 80%; height: 80%; }
+
+/* Symbols cropped from the runes sheet: white-on-black via invert, tinted gold, screened onto navy. */
+.sprite {
+  width: 78%;
+  height: 78%;
+  background: url(assets/runes.jpg) var(--pos) / var(--size) auto no-repeat;
+  filter: invert(1) var(--gold-tint);
+  mix-blend-mode: screen;
+}
+.ring-art {
+  width: 94%;
+  height: 94%;
+  border-radius: 50%;
+  background: url(assets/runemountain.jpg) center / cover no-repeat;
+  filter: sepia(1) saturate(3) hue-rotate(-12deg) brightness(1.05);
+  mix-blend-mode: screen;
+}
+.tree-art {
+  width: 90%;
+  height: 90%;
+  background: url(assets/runetree.png) center / contain no-repeat;
+  filter: invert(1) var(--gold-tint);
+  mix-blend-mode: screen;
+}
+
+/* Winged sun disc behind the eye: the bottom (black) drawing of egpytwings.jpg. */
+.wings {
+  left: 50%;
+  bottom: 0.7%;
+  transform: translateX(-50%);
+  width: 25vw;
+  aspect-ratio: 360 / 145;
+  background: url(assets/egpytwings.jpg) 0 90.7% / 100% auto no-repeat;
+  filter: invert(1) var(--gold-tint);
+  mix-blend-mode: screen;
+}
+
+/* Editable title plaques (straight, gold-bordered). */
+.plaque {
+  position: absolute;
+  z-index: 11;
+  width: 24%;
+  height: 7.2%;
+  box-sizing: border-box;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #1b3460 0%, #0f2242 100%);
+  border: 3px solid #c9a24a;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+.plaque.top { left: 13.6%; top: 1.4%; }
+.plaque.bottom { left: 8%; bottom: 1.4%; width: 20%; }
+.plaque span {
+  white-space: nowrap;
+  font: 700 40px Georgia, "Times New Roman", serif;
+  letter-spacing: .04em;
+  color: #f0d78c;
+}
+
+#audio-root {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* While media is showing, fade the decorations that overlap the picture so the map stays readable. */
+:root { --fade-opacity: 0.5; }
+.plaque, .medallion, .wings { transition: opacity .35s ease; }
+body.has-media .plaque,
+body.has-media .medallion,
+body.has-media .wings { opacity: var(--fade-opacity); }
+
+/* Move mode: the whole window becomes a drag handle and the cursor is shown. */
+#move-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-app-region: drag;
+  cursor: move;
+  background: rgba(0, 0, 0, .25);
+  outline: 6px dashed #f0d78c;
+  outline-offset: -6px;
+}
+#move-overlay span {
+  padding: 12px 28px;
+  font: 700 32px Georgia, serif;
+  color: #f0d78c;
+  background: rgba(15, 34, 66, .9);
+  border: 2px solid #c9a24a;
+  border-radius: 4px;
+}

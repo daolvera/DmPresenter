@@ -1,0 +1,15 @@
+{
+  "name": "dm-presenter",
+  "version": "1.0.0",
+  "description": "DM-only control app that drives a shareable presentation window (media, banner, audio).",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "electron": "^44.4.3",
+    "electron-store": "^8.2.0"
+  }
+}

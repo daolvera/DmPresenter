@@ -1,0 +1,31 @@
+[
+  { "category": "Conditions", "label": "Blinded", "title": "Blinded", "text": "Can't see; auto-fails checks that need sight. Attacks against you have Advantage; your attacks have Disadvantage." },
+  { "category": "Conditions", "label": "Charmed", "title": "Charmed", "text": "Can't attack the charmer or target them with harmful abilities or magic. The charmer has Advantage on social checks against you." },
+  { "category": "Conditions", "label": "Deafened", "title": "Deafened", "text": "Can't hear; auto-fails checks that need hearing." },
+  { "category": "Conditions", "label": "Exhaustion", "title": "Exhaustion", "text": "Each level: -2 to D20 Tests and -5 ft Speed. Die at level 6. A Long Rest removes 1 level." },
+  { "category": "Conditions", "label": "Frightened", "title": "Frightened", "text": "Disadvantage on ability checks and attacks while the source of fear is in line of sight. Can't willingly move closer to it." },
+  { "category": "Conditions", "label": "Grappled", "title": "Grappled", "text": "Speed 0. Disadvantage on attacks against anyone but the grappler. The grappler can drag or carry you." },
+  { "category": "Conditions", "label": "Incapacitated", "title": "Incapacitated", "text": "No actions, Bonus Actions, or Reactions. Concentration broken. Can't speak. Disadvantage on Initiative." },
+  { "category": "Conditions", "label": "Invisible", "title": "Invisible", "text": "Attacks against you have Disadvantage; your attacks have Advantage. Advantage on Initiative. Not seen without special senses." },
+  { "category": "Conditions", "label": "Paralyzed", "title": "Paralyzed", "text": "Incapacitated, Speed 0. Auto-fail Str and Dex saves. Attacks against you have Advantage; a hit from within 5 ft is a Critical Hit." },
+  { "category": "Conditions", "label": "Petrified", "title": "Petrified", "text": "Turned to stone. Incapacitated, Speed 0. Auto-fail Str and Dex saves. Attacks against you have Advantage. Resistance to all damage; immune to Poisoned." },
+  { "category": "Conditions", "label": "Poisoned", "title": "Poisoned", "text": "Disadvantage on attack rolls and ability checks." },
+  { "category": "Conditions", "label": "Prone", "title": "Prone", "text": "You can only crawl, or spend half your Speed to stand. Disadvantage on attacks. Attacks against you have Advantage from within 5 ft, otherwise Disadvantage." },
+  { "category": "Conditions", "label": "Restrained", "title": "Restrained", "text": "Speed 0. Attacks against you have Advantage; your attacks have Disadvantage. Disadvantage on Dex saves." },
+  { "category": "Conditions", "label": "Stunned", "title": "Stunned", "text": "Incapacitated. Auto-fail Str and Dex saves. Attacks against you have Advantage." },
+  { "category": "Conditions", "label": "Unconscious", "title": "Unconscious", "text": "Incapacitated, Prone, Speed 0; drops what it holds. Auto-fail Str and Dex saves. Attacks have Advantage; a hit from within 5 ft is a Critical Hit." },
+
+  { "category": "Cover", "label": "Half Cover", "title": "Half Cover", "text": "+2 bonus to AC and Dex saves." },
+  { "category": "Cover", "label": "Three-Quarters Cover", "title": "Three-Quarters Cover", "text": "+5 bonus to AC and Dex saves." },
+  { "category": "Cover", "label": "Total Cover", "title": "Total Cover", "text": "Can't be targeted directly by attacks or spells." },
+
+  { "category": "Rules", "label": "Advantage / Disadvantage", "title": "Advantage & Disadvantage", "text": "Roll two d20s: take the higher (Advantage) or lower (Disadvantage). Multiple sources don't stack; any of each cancels out." },
+  { "category": "Rules", "label": "Death Saves", "title": "Death Saving Throws", "text": "d20 at 0 HP: 10+ succeeds. 3 successes stabilize, 3 failures die. Natural 20: regain 1 HP. Natural 1: two failures." },
+  { "category": "Rules", "label": "Concentration", "title": "Concentration", "text": "When damaged: Con save, DC 10 or half the damage (whichever is higher, max 30). Fail and the spell ends." },
+  { "category": "Rules", "label": "Opportunity Attack", "title": "Opportunity Attack", "text": "Reaction: one melee attack when a creature you can see leaves your reach without Disengaging." },
+  { "category": "Rules", "label": "Dodge", "title": "Dodge", "text": "Until your next turn: attacks against you have Disadvantage (if you can see the attacker) and you have Advantage on Dex saves." },
+  { "category": "Rules", "label": "Help", "title": "Help", "text": "Give an ally Advantage on their next ability check or attack roll against a creature within 5 ft of you." },
+  { "category": "Rules", "label": "Grapple / Shove", "title": "Grapple & Shove", "text": "Unarmed Strike option. Target's Str or Dex save vs DC 8 + Str mod + Proficiency. Grapple: Grappled. Shove: Prone or pushed 5 ft." },
+  { "category": "Rules", "label": "Short / Long Rest", "title": "Rests", "text": "Short Rest: 1 hour, spend Hit Dice to heal. Long Rest: 8 hours, regain all HP and half your Hit Dice." },
+  { "category": "Rules", "label": "Roll for Initiative", "title": "Roll for Initiative!", "text": "" }
+]

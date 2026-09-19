@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src file:; style-src file: 'unsafe-inline'; img-src file: data:; media-src file:;">
+  <title>DM Presenter — Control</title>
+  <link rel="stylesheet" href="control.css">
+</head>
+<body>
+  <header>
+    <h1>DM Presenter</h1>
+    <button id="choose-folder">Choose folder</button>
+    <span id="folder-path" class="muted">No folder chosen</span>
+    <label class="move" title="Show a drag handle over the Presentation window so you can reposition it"><input type="checkbox" id="move-mode"> Move presentation window</label>
+    <button id="recenter" title="Center the Presentation window on the primary display">Recenter</button>
+    <button id="clear-media" class="danger">Clear</button>
+  </header>
+
+  <main>
+    <section id="media-panel">
+      <h2>Live view</h2>
+      <div class="toolbar">
+        <div class="seg" id="tools">
+          <button data-tool="pan" class="on" title="Drag to pan, wheel to zoom">✋ Pan</button>
+          <button data-tool="pen" title="Drag to draw">✏️ Draw</button>
+          <button data-tool="erase" title="Drag over marks to erase">🧽 Erase</button>
+        </div>
+        <div class="seg" id="swatches">
+          <button class="swatch on" data-color="#ff3b30" style="--c:#ff3b30" title="Red"></button>
+          <button class="swatch" data-color="#f5c542" style="--c:#f5c542" title="Gold"></button>
+          <button class="swatch" data-color="#ffffff" style="--c:#ffffff" title="White"></button>
+          <button class="swatch" data-color="#4aa3ff" style="--c:#4aa3ff" title="Blue"></button>
+          <button class="swatch" data-color="#3ddc84" style="--c:#3ddc84" title="Green"></button>
+        </div>
+        <label class="size">Size <input id="pen-size" type="range" min="2" max="24" value="6"></label>
+        <button id="zoom-out" title="Zoom out">−</button>
+        <button id="zoom-in" title="Zoom in">+</button>
+        <button id="reset-view">Reset view</button>
+        <button id="undo-mark">Undo</button>
+        <button id="clear-marks" class="danger">Clear marks</button>
+      </div>
+      <div id="live-stage">
+        <div id="live-world">
+          <img id="live-img" alt="" hidden>
+          <video id="live-video" muted loop autoplay playsinline hidden></video>
+          <svg id="live-marks" viewBox="0 0 1600 900" preserveAspectRatio="none"></svg>
+        </div>
+        <p id="live-empty" class="muted">Pick an image below to show it here.</p>
+      </div>
+
+      <h2>Media</h2>
+      <div id="media-grid"></div>
+      <p id="media-empty" class="muted">No images or videos found.</p>
+    </section>
+
+    <aside>
+      <section>
+        <h2>Frame labels</h2>
+        <input id="scroll-text" type="text" maxlength="80" placeholder="Title plaque (top-left)…">
+        <input id="location-text" type="text" maxlength="80" placeholder="Location plaque (bottom-left)…">
+      </section>
+
+      <section>
+        <h2>Banner</h2>
+        <input id="banner-text" type="text" maxlength="300" placeholder="Banner text…">
+        <div class="row">
+          <button id="show-banner">Show banner</button>
+          <button id="clear-banner">Clear banner</button>
+        </div>
+        <h3>Presets <span class="muted">(banners.json)</span></h3>
+        <div class="row">
+          <input id="preset-filter" type="text" placeholder="Filter presets…">
+        </div>
+        <div class="row">
+          <button id="reload-presets">Reload</button>
+          <button id="edit-presets">Edit file</button>
+        </div>
+        <p id="preset-error" class="error"></p>
+        <div id="preset-list"></div>
+      </section>
+
+      <section>
+        <h2>Audio Library</h2>
+        <div class="row">
+          <button id="add-youtube">+ Add YouTube link</button>
+          <button id="add-mp3">+ Add MP3</button>
+        </div>
+
+        <form id="add-form" hidden>
+          <input id="add-url" type="text" placeholder="YouTube URL">
+          <div id="add-file" class="muted" hidden></div>
+          <input id="add-label" type="text" maxlength="120" placeholder="Short label">
+          <button type="button" id="add-change-file" hidden>Change file…</button>
+          <div class="row">
+            <button type="submit" id="add-submit">Add</button>
+            <button type="button" id="add-cancel">Cancel</button>
+          </div>
+          <p id="add-error" class="error"></p>
+        </form>
+
+        <ul id="audio-list"></ul>
+
+        <div class="transport">
+          <button id="audio-play">▶ Play</button>
+          <button id="audio-pause">⏸ Pause</button>
+          <button id="audio-stop">⏹ Stop</button>
+        </div>
+        <label class="volume">Volume
+          <input id="volume" type="range" min="0" max="100" value="80">
+          <span id="volume-value">80</span>
+        </label>
+      </section>
+    </aside>
+  </main>
+
+  <script src="mapview.js"></script>
+  <script src="control.js"></script>
+</body>
+</html>

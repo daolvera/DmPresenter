@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src file: https://www.youtube.com https://s.ytimg.com; style-src file: 'unsafe-inline'; img-src file: data: https://i.ytimg.com; media-src file:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src https://www.youtube.com;">
+  <title>DM Presenter — Presentation</title>
+  <link rel="stylesheet" href="presentation.css">
+</head>
+<body>
+  <!-- z0: grainy navy backdrop, visible in the opening when no media is showing -->
+  <svg id="backdrop" viewBox="0 0 1671 941" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <filter id="grain-bg" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="7"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 .75  0 0 0 0 .8  0 0 0 0 .9  0 0 0 .1 0"/>
+        <feComposite in2="SourceGraphic" operator="in"/>
+      </filter>
+    </defs>
+    <rect width="1671" height="941" fill="#0f2242"/>
+    <rect width="1671" height="941" fill="#fff" filter="url(#grain-bg)"/>
+  </svg>
+
+  <div id="stage">
+    <!-- Parchment behind the media: visible around images that aren't 16:9 -->
+    <svg id="parchment" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <radialGradient id="pg" cx=".5" cy=".5" r=".75">
+          <stop offset="0" stop-color="#eddfb4"/><stop offset=".7" stop-color="#d9c18b"/><stop offset="1" stop-color="#b8925a"/>
+        </radialGradient>
+        <radialGradient id="burn" cx=".5" cy=".5" r=".72">
+          <stop offset=".55" stop-color="#5a3210" stop-opacity="0"/><stop offset="1" stop-color="#4a2708" stop-opacity=".6"/>
+        </radialGradient>
+        <filter id="stain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".012 .02" numOctaves="2" seed="11"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 .45  0 0 0 0 .3  0 0 0 0 .1  0 0 0 .9 -.25"/>
+          <feComposite in2="SourceGraphic" operator="in"/>
+        </filter>
+        <filter id="fibre" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .1  0 0 0 .35 -.08"/>
+          <feComposite in2="SourceGraphic" operator="in"/>
+        </filter>
+      </defs>
+      <rect width="1600" height="900" fill="url(#pg)"/>
+      <rect width="1600" height="900" fill="#fff" filter="url(#stain)"/>
+      <rect width="1600" height="900" fill="#fff" filter="url(#fibre)"/>
+      <rect width="1600" height="900" fill="url(#burn)"/>
+    </svg>
+    <div id="world">
+      <img id="media-img" alt="" hidden>
+      <video id="media-video" muted loop playsinline hidden></video>
+      <svg id="marks" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"></svg>
+    </div>
+  </div>
+  <div id="vignette"></div>
+
+  <div id="banner" hidden><div id="banner-box"><div id="banner-title"></div><div id="banner-text"></div></div></div>
+
+  <!-- Frame: navy border band (with grain and Greek-key strips) around a real opening. Sits above the media. -->
+  <svg id="frame" viewBox="0 0 1671 941" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecca70"/><stop offset="1" stop-color="#a47a28"/></linearGradient>
+      <filter id="grain" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="3"/>
+        <feColorMatrix type="matrix" values="0 0 0 0 .85  0 0 0 0 .75  0 0 0 0 .55  0 0 0 .12 0"/>
+        <feComposite in2="SourceGraphic" operator="in"/>
+      </filter>
+      <pattern id="key" width="24" height="16" patternUnits="userSpaceOnUse">
+        <path d="M2 14V2H22V10H8V6H16V7" fill="none" stroke="#c9a24a" stroke-width="2"/>
+      </pattern>
+    </defs>
+    <path fill="#0f2242" fill-rule="evenodd" d="M0 0H1671V941H0Z M48 27H1623V914H48Z"/>
+    <path fill="#fff" fill-rule="evenodd" filter="url(#grain)" d="M0 0H1671V941H0Z M48 27H1623V914H48Z"/>
+    <rect x="100" y="6" width="1471" height="16" fill="url(#key)" opacity=".85"/>
+    <rect x="100" y="919" width="1471" height="16" fill="url(#key)" opacity=".85"/>
+    <rect x="48" y="27" width="1575" height="887" fill="none" stroke="url(#gold)" stroke-width="4"/>
+    <rect x="40" y="19" width="1591" height="903" fill="none" stroke="#c9a24a" stroke-opacity=".45" stroke-width="1.5"/>
+  </svg>
+
+  <!-- Ornaments (art in assets/) -->
+  <div class="orn column left"><div class="cap"></div><div class="mid"></div><div class="base"></div></div>
+  <div class="orn column right"><div class="cap"></div><div class="mid"></div><div class="base"></div></div>
+
+  <div class="orn wings"></div>
+  <div class="orn medallion eye"><div class="gold-art wide" style="--art:url(assets/pharoaheye.png)"></div></div>
+
+  <div class="orn medallion aegis"><div class="sprite" style="--pos:27.3% 12.2%; --size:765%"></div></div>
+  <div class="orn medallion compass"><div class="sprite" style="--pos:70.6% 12.4%; --size:720%"></div></div>
+  <div class="orn medallion ring"><div class="ring-art"></div></div>
+  <div class="orn medallion tree"><div class="tree-art"></div></div>
+
+  <div id="scroll-text" class="plaque top" hidden><span id="scroll-label"></span></div>
+  <div id="location-text" class="plaque bottom" hidden><span id="location-label"></span></div>
+
+  <div id="move-overlay" hidden><span>Drag to move this window</span></div>
+
+  <div id="audio-root">
+    <div id="yt-player"></div>
+    <audio id="mp3"></audio>
+  </div>
+
+  <script src="mapview.js"></script>
+  <script src="presentation.js"></script>
+</body>
+</html>
