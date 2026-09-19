@@ -14,3 +14,11 @@ npm start
 The Presentation window has no title bar. Move it with Alt+Space > Move (or Win+arrow keys); its position is remembered.
 
 Maps: click an image, then use the Live view in Control. Wheel zooms, drag pans (Pan tool, or middle/right mouse in any tool), Draw/Erase add and remove marks. The Presentation window mirrors it. Marks are kept per image until the app closes.
+
+## Building an .exe
+
+```
+npm run dist
+```
+
+Produces, in `dist/`, an installer (`DM Presenter-Setup-<version>.exe`) and a single-file portable build (`DM Presenter-<version>-portable.exe`). In the packaged app, `banners.json` is copied to `%APPDATA%\dm-presenter\` on first run; the **Edit file** button opens that copy.

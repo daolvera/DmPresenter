@@ -187,7 +187,17 @@ function createPresentationWindow() {
 }
 
 // ---------- banner presets ----------
-const BANNERS_FILE = path.join(__dirname, 'banners.json');
+// Packaged apps can't edit files inside the app bundle, so keep an editable copy in the user data folder.
+const BANNERS_DEFAULT = path.join(__dirname, 'banners.json');
+const BANNERS_FILE = app.isPackaged ? path.join(app.getPath('userData'), 'banners.json') : BANNERS_DEFAULT;
+if (app.isPackaged && !fs.existsSync(BANNERS_FILE)) {
+  try {
+    fs.mkdirSync(path.dirname(BANNERS_FILE), { recursive: true });
+    fs.copyFileSync(BANNERS_DEFAULT, BANNERS_FILE);
+  } catch (err) {
+    console.error('could not create banners.json:', err);
+  }
+}
 
 function loadBanners() {
   try {

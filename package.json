@@ -4,12 +4,57 @@
   "description": "DM-only control app that drives a shareable presentation window (media, banner, audio).",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win"
   },
   "license": "MIT",
   "dependencies": {
     "chokidar": "^3.6.0",
-    "electron": "^44.4.3",
     "electron-store": "^8.2.0"
+  },
+  "devDependencies": {
+    "electron": "^44.4.3",
+    "electron-builder": "^26.15.3"
+  },
+  "author": "Dan Olvera",
+  "build": {
+    "appId": "com.dmpresenter.app",
+    "productName": "DM Presenter",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload-*.js",
+      "control.*",
+      "presentation.*",
+      "mapview.js",
+      "banners.json",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
   }
 }
