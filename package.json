@@ -55,6 +55,7 @@
     },
     "portable": {
       "artifactName": "${productName}-${version}-portable.${ext}"
-    }
+    },
+    "icon": "assets/icon.png"
   }
 }

@@ -128,6 +128,7 @@ function createControlWindow() {
     width: 1100,
     height: 780,
     title: 'DM Presenter — Control',
+    icon: path.join(__dirname, 'assets', 'icon.png'),
     backgroundColor: '#14161c',
     webPreferences: {
       preload: path.join(__dirname, 'preload-control.js'),
@@ -156,6 +157,7 @@ function createPresentationWindow() {
     frame: false,
     resizable: false,
     title: 'DM Presenter — Presentation',
+    icon: path.join(__dirname, 'assets', 'icon.png'),
     backgroundColor: '#000000',
     webPreferences: {
       preload: path.join(__dirname, 'preload-presentation.js'),

@@ -183,6 +183,7 @@ $('swatches').addEventListener('click', (e) => {
   for (const b of $('swatches').children) b.classList.toggle('on', b === e.target);
   setTool('pen');
 });
+$('base-screen').addEventListener('click', () => $('clear-media').click());
 $('zoom-in').addEventListener('click', () => zoomAt({ x: 0, y: 0 }, 1.3));
 $('zoom-out').addEventListener('click', () => zoomAt({ x: 0, y: 0 }, 1 / 1.3));
 $('reset-view').addEventListener('click', () => {

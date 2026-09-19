@@ -87,6 +87,7 @@ api.onClearBanner(() => {
 
 // ---------- audio ----------
 let volume = 80; // 0-100
+let wantPlay = false; // true from 'load a track' until the DM pauses/stops
 let loopAudio = false; // global: loops whichever track is current
 let activeType = null; // 'youtube' | 'mp3' | null
 let ytPlayer = null;
@@ -103,6 +104,7 @@ function silenceMp3() {
 
 function silenceYouTube() {
   pendingVideoId = null;
+  wantPlay = false;
   if (ytReady) ytPlayer.stopVideo();
 }
 
@@ -113,6 +115,10 @@ function createYouTubePlayer() {
     playerVars: { autoplay: 1, controls: 0, disablekb: 1, playsinline: 1 },
     events: {
       onStateChange: (e) => {
+        // A freshly loaded video that stalls at "cued"/"unstarted" (e.g. after a pause) gets a nudge.
+        if (wantPlay && (e.data === YT.PlayerState.CUED || e.data === YT.PlayerState.UNSTARTED)) {
+          ytPlayer.playVideo();
+        }
         if (loopAudio && e.data === YT.PlayerState.ENDED) {
           ytPlayer.seekTo(0);
           ytPlayer.playVideo();
@@ -145,9 +151,12 @@ api.onAudioLoad((entry) => {
   if (entry.type === 'youtube') {
     silenceMp3();
     activeType = 'youtube';
+    wantPlay = true;
     if (ytReady) {
       ytPlayer.setVolume(volume);
+      ytPlayer.stopVideo(); // clears a paused state so the same video restarts too
       ytPlayer.loadVideoById(entry.videoId);
+      ytPlayer.playVideo();
     } else {
       pendingVideoId = entry.videoId;
       ensureYouTubeApi();
@@ -155,7 +164,10 @@ api.onAudioLoad((entry) => {
   } else {
     silenceYouTube();
     activeType = 'mp3';
+    wantPlay = true;
+    mp3.pause();
     mp3.src = entry.url;
+    mp3.load(); // also restarts if this is the same file that was paused
     mp3.volume = volume / 100;
     mp3.play().catch((err) => console.error('mp3 play failed:', err));
   }
@@ -174,12 +186,12 @@ api.onAudioControl(({ action, value }) => {
     return;
   }
   if (activeType === 'mp3') {
-    if (action === 'play') mp3.play().catch(() => {});
-    else if (action === 'pause') mp3.pause();
-    else if (action === 'stop') { mp3.pause(); mp3.currentTime = 0; }
+    if (action === 'play') { wantPlay = true; mp3.play().catch(() => {}); }
+    else if (action === 'pause') { wantPlay = false; mp3.pause(); }
+    else if (action === 'stop') { wantPlay = false; mp3.pause(); mp3.currentTime = 0; }
   } else if (activeType === 'youtube' && ytReady) {
-    if (action === 'play') ytPlayer.playVideo();
-    else if (action === 'pause') ytPlayer.pauseVideo();
-    else if (action === 'stop') ytPlayer.stopVideo();
+    if (action === 'play') { wantPlay = true; ytPlayer.playVideo(); }
+    else if (action === 'pause') { wantPlay = false; ytPlayer.pauseVideo(); }
+    else if (action === 'stop') { wantPlay = false; ytPlayer.stopVideo(); }
   }
 });
