@@ -368,8 +368,10 @@ ipcMain.on('audio-load', (_e, entry) => {
 
 ipcMain.on('audio-control', (_e, msg) => {
   const action = msg?.action;
-  if (!['play', 'pause', 'stop', 'volume'].includes(action)) return;
-  const value = action === 'volume' ? Math.min(100, Math.max(0, Number(msg.value) || 0)) : undefined;
+  if (!['play', 'pause', 'stop', 'volume', 'loop'].includes(action)) return;
+  let value;
+  if (action === 'volume') value = Math.min(100, Math.max(0, Number(msg.value) || 0));
+  else if (action === 'loop') value = !!msg.value;
   send(presentationWin, 'audio-control', { action, value });
 });
 

@@ -87,6 +87,7 @@ api.onClearBanner(() => {
 
 // ---------- audio ----------
 let volume = 80; // 0-100
+let loopAudio = false; // global: loops whichever track is current
 let activeType = null; // 'youtube' | 'mp3' | null
 let ytPlayer = null;
 let ytReady = false;
@@ -111,6 +112,12 @@ function createYouTubePlayer() {
     height: 200,
     playerVars: { autoplay: 1, controls: 0, disablekb: 1, playsinline: 1 },
     events: {
+      onStateChange: (e) => {
+        if (loopAudio && e.data === YT.PlayerState.ENDED) {
+          ytPlayer.seekTo(0);
+          ytPlayer.playVideo();
+        }
+      },
       onReady: () => {
         ytReady = true;
         ytPlayer.setVolume(volume);
@@ -155,6 +162,11 @@ api.onAudioLoad((entry) => {
 });
 
 api.onAudioControl(({ action, value }) => {
+  if (action === 'loop') {
+    loopAudio = !!value;
+    mp3.loop = loopAudio;
+    return;
+  }
   if (action === 'volume') {
     volume = value;
     mp3.volume = volume / 100;

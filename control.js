@@ -438,6 +438,7 @@ $('add-form').addEventListener('submit', async (e) => {
 $('audio-play').addEventListener('click', () => api.audioControl({ action: 'play' }));
 $('audio-pause').addEventListener('click', () => api.audioControl({ action: 'pause' }));
 $('audio-stop').addEventListener('click', () => api.audioControl({ action: 'stop' }));
+$('audio-loop').addEventListener('change', (e) => api.audioControl({ action: 'loop', value: e.target.checked }));
 $('volume').addEventListener('input', (e) => {
   $('volume-value').textContent = e.target.value;
   api.audioControl({ action: 'volume', value: Number(e.target.value) });
